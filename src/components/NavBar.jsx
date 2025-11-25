@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { BASE_URL } from "../utils/constants";
@@ -27,34 +27,42 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar bg-base-300 shadow-sm">
-      <div className="flex-1">
-        <Link to="/feed" className="btn btn-ghost text-xl">
+    <div className="navbar bg-base-300 shadow-sm px-4">
+      <div className="navbar-start">
+        <Link
+          to="/feed"
+          className="btn btn-ghost normal-case text-lg sm:text-xl bg-brand text-brand-accent"
+        >
           DevTinder
         </Link>
       </div>
-      <div className="flex gap-2">
+      <div className="navbar-end gap-2">
         {user && (
-          <div className="my-2">
-            <p>Welcome, {user.firstName}</p>
+          <div className="hidden sm:block">
+            <p className="text-sm sm:text-base text-brand-accent truncate max-w-[120px] sm:max-w-none">
+              Welcome, {user.firstName}
+            </p>
           </div>
         )}
-        <div className="dropdown dropdown-end mx-5">
+        <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
             className="btn btn-ghost btn-circle avatar"
           >
             {user && (
-              <div className="w-10 rounded-full">
+              <div className="w-9 sm:w-10 rounded-full">
                 <img alt="Tailwind CSS Navbar component" src={user.photoUrl} />
               </div>
             )}
           </div>
           {user && (
             <ul
-              tabIndex="-1"
+              tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              onClick={(e) => {
+                e.currentTarget.blur();
+              }}
             >
               <li>
                 <Link to="/profile" className="justify-between">

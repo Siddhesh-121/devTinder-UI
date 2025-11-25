@@ -51,13 +51,13 @@ const Login = () => {
     <div className="flex justify-center my-4">
       <div className="card card-border bg-base-300 w-96 my-2">
         <div className="card-body">
-          <h2 className="card-title justify-center text-2xl">
+          <h2 className="card-title justify-center text-2xl text-brand-accent">
             {isLoginForm ? "Login" : "Sign Up"}
           </h2>
           {!isLoginForm && (
             <>
               <fieldset className="fieldset">
-                <legend className="fieldset-legend">First Name</legend>
+                <legend className="fieldset-legend ">First Name</legend>
                 <input
                   type="text"
                   className="input"
@@ -79,20 +79,22 @@ const Login = () => {
             </>
           )}
           <fieldset className="fieldset">
-            <legend className="fieldset-legend">Email</legend>
+            <legend className="fieldset-legend text-brand-accent">Email</legend>
             <input
               type="text"
-              className="input"
+              className="input text-brand-accent-300"
               placeholder="Email"
               value={emailId}
               onChange={(e) => setEmailId(e.target.value)}
             />
           </fieldset>
           <fieldset className="fieldset">
-            <legend className="fieldset-legend">Password</legend>
+            <legend className="fieldset-legend text-brand-accent">
+              Password
+            </legend>
             <input
               type="password"
-              className="input"
+              className="input text-brand-accent-300"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -101,14 +103,14 @@ const Login = () => {
           <p className="text-red-500">{error}</p>
           <div className="card-actions justify-end my-3">
             <button
-              className="btn btn-primary"
+              className="btn bg-brand text-brand-accent"
               onClick={isLoginForm ? handleLogin : handleSignUp}
             >
               {isLoginForm ? "Login" : "Sign Up"}
             </button>
           </div>
           <p
-            className="m-auto cursor-pointer py-2"
+            className="m-auto cursor-pointer py-2 text-brand-accent-300"
             onClick={() => setIsLoginForm((value) => !value)}
           >
             {isLoginForm

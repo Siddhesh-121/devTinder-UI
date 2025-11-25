@@ -38,13 +38,15 @@ const EditProfile = ({ user }) => {
   };
   return (
     <>
-      <div className="flex justify-center  my-10 max ">
-        <div className="flex justify-center mx-10 ">
+      <div className="flex flex-col lg:flex-row justify-center items-start gap-8 my-10 px-4">
+        <div className="w-full lg:w-1/2 flex justify-center">
           <div className="card bg-base-300 w-96 shadow-xl">
             <div className="card-body">
-              <h2 className="card-title justify-center">Edit Profile</h2>
+              <h2 className="card-title justify-center text-brand-accent">
+                Edit Profile
+              </h2>
               <div>
-                <label className="form-control w-full max-w-xs my-2">
+                <label className="form-control w-full">
                   <div className="label">
                     <span className="label-text">First Name</span>
                   </div>
@@ -52,10 +54,10 @@ const EditProfile = ({ user }) => {
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstname(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full"
                   />
                 </label>
-                <label className="form-control w-full max-w-xs my-2">
+                <label className="form-control w-full">
                   <div className="label">
                     <span className="label-text">Last Name</span>
                   </div>
@@ -63,10 +65,10 @@ const EditProfile = ({ user }) => {
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full"
                   />
                 </label>
-                <label className="form-control w-full max-w-xs my-2">
+                <label className="form-control w-full">
                   <div className="label">
                     <span className="label-text">Age</span>
                   </div>
@@ -74,10 +76,10 @@ const EditProfile = ({ user }) => {
                     type="text"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full"
                   />
                 </label>
-                <label className="form-control w-full max-w-xs my-2">
+                <label className="form-control w-full">
                   <div className="label">
                     <span className="label-text">PhotoURL</span>
                   </div>
@@ -85,20 +87,25 @@ const EditProfile = ({ user }) => {
                     type="text"
                     value={photoUrl}
                     onChange={(e) => setPhotoUrl(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full"
                   />
                 </label>
-                <label className="form-control w-full max-w-xs my-2">
+                <label className="form-control w-full">
                   <div className="label">
                     <span className="label-text">Gender</span>
                   </div>
-                  <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn m-1">
+                  <div className="dropdown w-full">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="btn w-full justify-between"
+                    >
                       {gender || "Select gender"}
+                      <span className="text-xs opacity-70">▼</span>
                     </div>
                     <ul
                       tabIndex={0}
-                      className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                      className="dropdown-content menu bg-base-100 rounded-box z-[1] w-full p-2 shadow"
                     >
                       <li>
                         <button onClick={() => setGender("male")}>Male</button>
@@ -116,7 +123,7 @@ const EditProfile = ({ user }) => {
                     </ul>
                   </div>
                 </label>
-                <label className="form-control w-full max-w-xs my-2">
+                <label className="form-control w-full">
                   <div className="label">
                     <span className="label-text">Skills</span>
                   </div>
@@ -124,11 +131,11 @@ const EditProfile = ({ user }) => {
                     type="text"
                     value={skills}
                     onChange={(e) => setSkills(e.target.value.split(","))}
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full"
                   />
                 </label>
 
-                <label className="form-control w-full max-w-xs my-2">
+                <label className="form-control w-full">
                   <div className="label">
                     <span className="label-text">About</span>
                   </div>
@@ -137,23 +144,28 @@ const EditProfile = ({ user }) => {
                     type="text"
                     value={about}
                     onChange={(e) => setAbout(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
+                    className="textarea textarea-bordered w-full min-h-[80px]"
                   ></textarea>
                 </label>
               </div>
               <p className="text-red-500 text-center">{error}</p>
               <div className="card-actions justify-center mt-2">
-                <button className="btn btn-primary" onClick={saveProfile}>
+                <button
+                  className="btn text-brand-accent bg-brand"
+                  onClick={saveProfile}
+                >
                   Save Profile
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <UserCard
-          user={{ firstName, lastName, photoUrl, about, age, gender, skills }}
-          isProfile={true}
-        />
+        <div className="w-full lg:w-1/3 flex justify-center">
+          <UserCard
+            user={{ firstName, lastName, photoUrl, about, age, gender, skills }}
+            isProfile={true}
+          />
+        </div>
       </div>
       {showToast && (
         <div className="toast toast-top toast-center pt-20 ">

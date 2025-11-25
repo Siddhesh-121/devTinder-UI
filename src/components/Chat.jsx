@@ -1,39 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { createSocketConnection } from "../utils/socket";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
   const { targetUserId } = useParams();
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Hey! How are you?",
-      timestamp: "2 hours ago",
-      isSent: false,
-      status: "Seen",
-    },
-    {
-      id: 2,
-      text: "I'm doing great! Thanks for asking.",
-      timestamp: "2 hours ago",
-      isSent: true,
-      status: "Delivered",
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const user = useSelector((store) => store.user);
+  const userId = user?._id;
+  const firstName = user?.firstName;
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-    if (newMessage.trim()) {
-      const message = {
-        id: messages.length + 1,
-        text: newMessage,
-        timestamp: "Just now",
-        isSent: true,
-        status: "Sent",
-      };
-      setMessages([...messages, message]);
-      setNewMessage("");
-    }
+  useEffect(() => {
+    if (!user) return;
+    const socket = createSocketConnection();
+    socket.emit("joinChat", { firstName, userId, targetUserId });
+
+    socket.on("recieveMessage", ({ firstName, targetUserId, text }) => {
+      console.log(firstName + " sent " + text);
+      setMessages((messages) => [
+        ...messages,
+        { firstName, text, isSent: targetUserId === userId ? false : true },
+      ]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [userId, targetUserId]);
+
+  const handleSendMessage = () => {
+    const socket = createSocketConnection();
+    socket.emit("sendMessage", {
+      firstName,
+      userId,
+      targetUserId,
+      text: newMessage,
+    });
+    setNewMessage("");
   };
 
   return (
@@ -49,35 +53,39 @@ const Chat = () => {
           <div className="p-4 h-96 overflow-y-auto">
             {messages.map((message) => (
               <div
-                key={message.id}
+                // key={message.id}
                 className={message.isSent ? "chat chat-end" : "chat chat-start"}
               >
                 <div className="chat-header">
-                  {message.isSent ? "You" : "User"}
-                  <time className="text-xs opacity-50 ml-2">
+                  {message.firstName}
+                  {/* <time className="text-xs opacity-50 ml-2">
                     {message.timestamp}
-                  </time>
+                  </time> */}
                 </div>
                 <div className="chat-bubble">{message.text}</div>
-                <div className="chat-footer opacity-50">{message.status}</div>
+                {/* <div className="chat-footer opacity-50">{message.status}</div> */}
               </div>
             ))}
           </div>
 
           {/* Message Input */}
-          <div className="bg-base-200 p-4 border-t border-base-100">
-            <form onSubmit={handleSendMessage} className="flex gap-2">
-              <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type a message..."
-                className="input input-bordered flex-1"
-              />
-              <button type="submit" className="btn btn-primary">
-                Send
-              </button>
-            </form>
+          <div className="bg-base-200 p-4 border-t border-base-100 flex gap-2">
+            {/* <form className=""> */}
+            <input
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type a message..."
+              className="input input-bordered flex-1"
+            />
+            <button
+              type="submit"
+              onClick={handleSendMessage}
+              className="btn btn-primary"
+            >
+              Send
+            </button>
+            {/* </form> */}
           </div>
         </div>
       </div>

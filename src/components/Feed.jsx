@@ -5,6 +5,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
+import SwipeableUserCard from "./SwipeableUserCard";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -33,9 +34,10 @@ const Feed = () => {
         // feed.map((item) => (
         //   <UserCard key={item._id} user={item} isProfile={false} />
         // ))
-        <UserCard user={feed[0]} isProfile={false} />
+        <SwipeableUserCard user={feed[0]} isProfile={false} />
       ) : (
-        <h1 className="text-2xl">No New Users found!</h1>
+        // <UserCard user={feed[0]} isProfile={false} />
+        <h1 className="text-2xl text-brand-accent">No New Users found!</h1>
       )}
     </div>
   );

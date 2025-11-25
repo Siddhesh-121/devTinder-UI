@@ -8,7 +8,8 @@ const Premium = () => {
     const res = await axios.get(BASE_URL + "/premium/verify", {
       withCredentials: true,
     });
-    setIsUserPremium(res.isPremium);
+    console.log(res.data.isPremium);
+    setIsUserPremium(res?.data?.isPremium);
   };
 
   useEffect(() => {
@@ -32,11 +33,11 @@ const Premium = () => {
     }
   };
 
-  return isUserPremium ? (
+  return !isUserPremium ? (
     <div className="min-h-screen bg-base-200 py-10 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 text-brand-accent">
           <h1 className="text-4xl font-bold mb-4">Upgrade to Premium</h1>
           <p className="text-lg opacity-70">
             Get more matches, better visibility, and exclusive features
@@ -44,13 +45,13 @@ const Premium = () => {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto ">
           {/* Silver Package */}
           <div className="card bg-base-300 shadow-2xl border-2 border-gray-600 hover:scale-105 transition-transform">
             <div className="card-body">
               <div className="text-center mb-4">
                 <div className="badge badge-lg badge-neutral mb-2">SILVER</div>
-                <h2 className="card-title text-3xl justify-center mb-2">
+                <h2 className="card-title text-3xl justify-center mb-2 ">
                   9.99
                   <span className="text-lg font-normal opacity-60">/month</span>
                 </h2>
@@ -152,7 +153,7 @@ const Premium = () => {
         </div>
 
         {/* Additional Info */}
-        <div className="text-center mt-12 opacity-70">
+        <div className="text-center mt-12 opacity-70 text-brand-accent">
           <p className="text-sm">
             All plans auto-renew. Cancel anytime from your profile settings.
           </p>
