@@ -46,11 +46,11 @@ const Chat = () => {
         <div className="card-body p-0">
           {/* Chat Header */}
           <div className="bg-base-200 p-4 border-b border-base-100">
-            <h2 className="text-xl font-bold">Chat</h2>
+            <h2 className="text-xl font-bold text-brand-accent">Chat</h2>
           </div>
 
           {/* Messages Container */}
-          <div className="p-4 h-96 overflow-y-auto">
+          <div className="p-4 h-96 overflow-y-auto text-brand-accent">
             {messages.map((message) => (
               <div
                 // key={message.id}
@@ -76,12 +76,12 @@ const Chat = () => {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type a message..."
-              className="input input-bordered flex-1"
+              className="input input-bordered flex-1 text-brand-accent"
             />
             <button
               type="submit"
               onClick={handleSendMessage}
-              className="btn btn-primary"
+              className="btn bg-brand-accent text-brand"
             >
               Send
             </button>
